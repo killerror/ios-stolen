@@ -67,7 +67,7 @@ class ViewController: UIViewController {
     // Используем "ленивое" свойство lazy - свойство, начальное значение которого не вычисляется до первого использования.
     // Иначе в строке button.addTarget слово self будет ссылаться на тип ViewController, а не на экземпляр ViewController.
     // Когда мы выносим указание характеристик кнопки в отдельный метод addButton(), то там можно указать свойство метода private.
-    lazy var myButton2: UIButton = {
+    private lazy var myButton2: UIButton = {
         let button = UIButton()
         button.setTitle("Изменить цвет экрана", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -75,11 +75,14 @@ class ViewController: UIViewController {
         button.backgroundColor = .blue
         button.addTarget(self, action: #selector(tap2), for: .touchUpInside) // .touchUpInside - когда нажали на кнопку и отпустили на ней же; .touchDown - когда нажали на кнопку
         return button
-    }()
+    }()    
     
     // Указатель, произошло ли нажатие на кнопку
     private var isMyButton2Taped = false
 
+    private var customButton1 = CustomButton(text: "Перейти на TableViewController")
+    private var customButton2 = CustomButton(text: "Перейти на CollectionViewController")
+    
     
     // MARK: viewDidLoad()
     
@@ -99,6 +102,9 @@ class ViewController: UIViewController {
         
         // Добавление элементов на экран (разных вью в контроллер) выносим в отдельную функцию
         setupUI()
+        
+        customButton1.addTarget(self, action: #selector(customTap1), for: .touchUpInside)
+        customButton2.addTarget(self, action: #selector(customTap2), for: .touchUpInside)
     }
     
     private func setupUI() {
@@ -111,6 +117,9 @@ class ViewController: UIViewController {
         view.addSubview(myButton)
         
         view.addSubview(myButton2)
+        
+        view.addSubview(customButton1)
+        view.addSubview(customButton2)
         
         addConstraints()
     }
@@ -131,6 +140,8 @@ class ViewController: UIViewController {
         myLabel.translatesAutoresizingMaskIntoConstraints = false
         myButton.translatesAutoresizingMaskIntoConstraints = false
         myButton2.translatesAutoresizingMaskIntoConstraints = false
+        customButton1.translatesAutoresizingMaskIntoConstraints = false
+        customButton2.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             
@@ -156,8 +167,20 @@ class ViewController: UIViewController {
             myButton2.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             myButton2.leftAnchor.constraint(equalTo: view.leftAnchor),
             myButton2.rightAnchor.constraint(equalTo: view.rightAnchor),
-            myButton2.rightAnchor.constraint(equalTo: view.rightAnchor),
-            myButton2.rightAnchor.constraint(equalTo: view.rightAnchor),
+            
+            // customButton1
+            
+            customButton1.topAnchor.constraint(equalTo: myButton2.bottomAnchor, constant: 20),
+            customButton1.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            customButton1.leftAnchor.constraint(equalTo: view.leftAnchor),
+            customButton1.rightAnchor.constraint(equalTo: view.rightAnchor),
+            
+            // customButton2
+            
+            customButton2.topAnchor.constraint(equalTo: customButton1.bottomAnchor, constant: 20),
+            customButton2.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            customButton2.leftAnchor.constraint(equalTo: view.leftAnchor),
+            customButton2.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
     }
 }
@@ -182,6 +205,16 @@ private extension ViewController {
         } else {
             view.backgroundColor = .white
         }
+    }
+    
+    // Поведение первой кастомной кнопки
+    @objc func customTap1() {
+        navigationController?.pushViewController(TableViewController(), animated: true)
+    }
+    
+    // Поведение второй кастомной кнопки
+    @objc func customTap2() {
+        navigationController?.pushViewController(CollectionViewController(collectionViewLayout: UICollectionViewFlowLayout()), animated: true)
     }
 }
 
