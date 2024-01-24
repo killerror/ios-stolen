@@ -10,7 +10,8 @@ import UIKit
 final class GroupsViewController: UITableViewController {
 
     // Создаём объект NetworkService
-    private let networkService = NetworkService()
+    //private let networkService = NetworkService()
+    // Чтобы не создавать каждый раз объект, сделал его методы статичными, т.к. нам в данном случае не нужны разные экземпляры NetworkService.
     
     override func viewDidLoad() {
         
@@ -22,7 +23,7 @@ final class GroupsViewController: UITableViewController {
         tableView.register(GroupCell.self, forCellReuseIdentifier: "cell")
         
         // Запрашиваем список групп
-        networkService.getGroups()
+        NetworkService.getGroups()
     }
     
     // Определяем количество ячеек в каждом разделе

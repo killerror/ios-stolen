@@ -10,7 +10,8 @@ import UIKit
 final class PhotosViewController: UICollectionViewController {
     
     // Создаём объект NetworkService
-    private let networkService = NetworkService()
+    //private let networkService = NetworkService()
+    // Чтобы не создавать каждый раз объект, сделал его методы статичными, т.к. нам в данном случае не нужны разные экземпляры NetworkService.
     
     override func viewDidLoad() {
         
@@ -22,7 +23,7 @@ final class PhotosViewController: UICollectionViewController {
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: "cell") // Вместо "cell" можно любой набор символов
         
         // Запрашиваем фотографии
-        networkService.getPhotos()
+        NetworkService.getPhotos()
     }
     
     // Количество ячеек

@@ -10,7 +10,8 @@ import UIKit
 final class FriendsViewController: UITableViewController {
     
     // Создаём объект NetworkService
-    private let networkService = NetworkService()
+    //private let networkService = NetworkService()
+    // Чтобы не создавать каждый раз объект, сделал его методы статичными, т.к. нам в данном случае не нужны разные экземпляры NetworkService.
     
     override func viewDidLoad() {
         
@@ -22,7 +23,7 @@ final class FriendsViewController: UITableViewController {
         tableView.register(FriendCell.self, forCellReuseIdentifier: "cell")
         
         // Запрашиваем список друзей
-        networkService.getFriends()
+        NetworkService.getFriends()
     }
     
     // Определяем количество ячеек в каждом разделе
