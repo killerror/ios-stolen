@@ -87,7 +87,7 @@
  }
  */
 
-struct PhotosResponse: Decodable {
+struct PhotosModel: Decodable {
     let response: PhotosItems
 }
 

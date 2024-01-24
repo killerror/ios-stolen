@@ -121,10 +121,10 @@ extension ViewController: WKNavigationDelegate {
 
         decisionHandler(.cancel)
         
-        // Удаляем наш view с экрана.
+        // Удаляем ВК с экрана.
         webView.removeFromSuperview()
         
-        // Переходим на экран вконтакте.
+        // Переходим на наши три экрана с табБаром внизу.
         tap()
     }
 }

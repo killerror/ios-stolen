@@ -29,7 +29,7 @@ final class NetworkService {
             }
             
             do {
-                let friends = try JSONDecoder().decode(FriendsResponse.self, from: data)
+                let friends = try JSONDecoder().decode(FriendsModel.self, from: data)
                 
                 // Выводим в консоль
                 print(friends)
@@ -54,7 +54,7 @@ final class NetworkService {
             }
             
             do {
-                let groups = try JSONDecoder().decode(GroupsResponse.self, from: data)
+                let groups = try JSONDecoder().decode(GroupsModel.self, from: data)
                 
                 // Выводим в консоль
                 print(groups)
@@ -79,7 +79,7 @@ final class NetworkService {
             }
             
             do {
-                let photos = try JSONDecoder().decode(PhotosResponse.self, from: data)
+                let photos = try JSONDecoder().decode(PhotosModel.self, from: data)
                 
                 // Выводим в консоль
                 print(photos)

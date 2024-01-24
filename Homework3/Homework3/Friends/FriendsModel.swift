@@ -33,7 +33,7 @@
 }
 */
 
-struct FriendsResponse: Decodable {
+struct FriendsModel: Decodable {
     let response: FriendsItems
 }
 

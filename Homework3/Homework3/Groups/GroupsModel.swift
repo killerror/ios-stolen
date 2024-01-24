@@ -27,7 +27,7 @@
  } 
  */
 
-struct GroupsResponse: Decodable {
+struct GroupsModel: Decodable {
     let response: GroupsItems
 }
 
