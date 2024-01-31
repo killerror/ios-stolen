@@ -34,6 +34,7 @@ final class GroupCell: UITableViewCell {
         label.textAlignment = .left
         label.textColor = .black
         label.backgroundColor = .white
+        label.numberOfLines = 5
         return label
     }()
     
@@ -85,7 +86,7 @@ final class GroupCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             
-            groupAvatar.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            groupAvatar.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
             groupAvatar.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
             groupAvatar.heightAnchor.constraint(equalToConstant: 40),
             groupAvatar.widthAnchor.constraint(equalTo: groupAvatar.heightAnchor),

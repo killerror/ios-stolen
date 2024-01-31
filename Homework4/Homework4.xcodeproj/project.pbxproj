@@ -77,13 +77,13 @@
 				41D0BF732B470E8200EBF28E /* AppDelegate.swift */,
 				41D0BF752B470E8200EBF28E /* SceneDelegate.swift */,
 				41D0BF772B470E8200EBF28E /* ViewController.swift */,
+				41D0BFF32B601ADE00EBF28E /* NetworkService.swift */,
 				41D0BFEC2B5ADC6900EBF28E /* Photos */,
 				41D0BFEB2B5ADC5D00EBF28E /* Groups */,
 				41D0BFE42B5AB7EC00EBF28E /* Friends */,
 				41D0BF7C2B470E8400EBF28E /* Assets.xcassets */,
 				41D0BF7E2B470E8400EBF28E /* LaunchScreen.storyboard */,
 				41D0BF812B470E8400EBF28E /* Info.plist */,
-				41D0BFF32B601ADE00EBF28E /* NetworkService.swift */,
 			);
 			path = Homework4;
 			sourceTree = "<group>";

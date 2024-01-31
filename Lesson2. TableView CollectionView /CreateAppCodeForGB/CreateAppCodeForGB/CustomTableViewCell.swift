@@ -68,5 +68,16 @@ class CustomTableViewCell: UITableViewCell {
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
+    
+    func setupTitles(townName: String, lat: Double?, lon: Double?) {
+
+        label.text = townName
+        if let lat = lat {
+            label1.text = String(lat)
+        }
+        if let lon = lon {
+            label2.text = String(lon)
+        }
+    }
 }
 

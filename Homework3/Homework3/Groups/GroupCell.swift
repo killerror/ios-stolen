@@ -34,6 +34,7 @@ final class GroupCell: UITableViewCell {
         label.textAlignment = .left
         label.textColor = .black
         label.backgroundColor = .white
+        label.numberOfLines = 0
         return label
     }()
     

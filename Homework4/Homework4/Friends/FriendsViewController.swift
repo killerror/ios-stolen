@@ -10,8 +10,7 @@ import UIKit
 final class FriendsViewController: UITableViewController {
     
     // Создаём объект NetworkService
-    //private let networkService = NetworkService()
-    // Чтобы не создавать каждый раз объект, сделал его методы статичными, т.к. нам в данном случае не нужны разные экземпляры NetworkService.
+    private let networkService = NetworkService()
             
     private var model: [Friend] = []
 
@@ -28,7 +27,7 @@ final class FriendsViewController: UITableViewController {
         //NetworkService.getFriends()
         
         // Передаём в ф-ю getFriends замыкание, которое в самой ф-и обозначим как @escaping, чтобы после выполнения ф-и сюда вернулся массив, который мы сможем положить в model.
-        NetworkService.getFriends { [weak self] friends in
+        networkService.getFriends { [weak self] friends in
             
             self?.model = friends
             
@@ -63,3 +62,4 @@ final class FriendsViewController: UITableViewController {
         return cell
     }
 }
+

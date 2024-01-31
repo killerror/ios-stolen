@@ -11,6 +11,8 @@ class NewViewController: UITableViewController {
     
 //    private var tableView = UITableView(frame: .zero, style: .grouped)
     
+    private var networkService = NetworkService()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //view.backgroundColor = .blue
@@ -27,27 +29,42 @@ class NewViewController: UITableViewController {
 //        tableView.delegate = self
         
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        networkService.delegate = self
+        networkService.getData { [weak self] towns in
+            self?.models = towns
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
     }
     
+    // Количество строк в секции
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         30
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+        
         guard let cell = cell as? CustomTableViewCell else  {
             return UITableViewCell()
         }
+        
         if indexPath.row == 0 {
             cell.accessoryType = .checkmark
         }
+        
         return cell
     }
     
+    // Количество секций
     override func numberOfSections(in tableView: UITableView) -> Int {
         4
     }
     
+    // Название секций
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         "Section"
     }
@@ -59,6 +76,7 @@ class NewViewController: UITableViewController {
         navigationController?.pushViewController(CollectionViewController(collectionViewLayout: getLayout()), animated: true)
     }
     
+    // Высота заголовка секции
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         100
     }
@@ -96,6 +114,35 @@ class NewViewController: UITableViewController {
 //        ])
 //    }
 }
+
+extension NewViewController: NetworkServiceDelegate {
+    
+    // В этой переменной будут храниться модели для отображения
+    private var models: [Town] = []
+    
+    func updateData(towns: [Town]) {
+        models = towns
+        tableView.reloadData()
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        models.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+        
+        guard let cell = cell as? CustomTableViewCell else  {
+            return UITableViewCell()
+        }
+        
+        cell.setupTitles(townName: models[indexPath.row].townName, lat: models[indexPath.row].coords.lat, lon: models[indexPath.row].coords.lon)
+        
+        return cell
+    }
+}
+
 //
 //
 //extension NewViewController: UITableViewDataSource {
@@ -143,3 +190,5 @@ class NewViewController: UITableViewController {
 //        UITableView.automaticDimension
 //    }
 //}
+
+

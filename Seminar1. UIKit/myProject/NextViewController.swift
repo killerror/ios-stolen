@@ -51,7 +51,7 @@ final class NextViewController: UIViewController {
         super.viewDidLoad()
         
         // У UIViewController есть свойство view - это представление, которым управляет контроллер, по умолчанию оно расположено на весь экран.
-        view.backgroundColor = .green
+        view.backgroundColor = Theme.currentTheme.backgroundColor
         
         // Заголовок для экрана
         title = "Next ViewController"

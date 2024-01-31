@@ -9,14 +9,14 @@ import Foundation
 
 final class NetworkService {
     
-    static let session = URLSession.shared
+    private let session = URLSession.shared
     
     // Access token, выданный VK.
     static var token = ""
     //static var userID = ""
     
     // Запрашиваем список друзей.
-    static func getFriends(completion: @escaping ([Friend]) -> Void) {
+    func getFriends(completion: @escaping ([Friend]) -> Void) {
         
         guard let url = URL(string: "https://api.vk.com/method/friends.get?access_token=" + NetworkService.token + "&fields=photo_50,online&v=5.199") else {
             return
@@ -43,7 +43,7 @@ final class NetworkService {
     }
     
     // Запрашиваем список групп (сообществ).
-    static func getGroups(completion: @escaping ([Group]) -> Void) {
+    func getGroups(completion: @escaping ([Group]) -> Void) {
         
         guard let url = URL(string: "https://api.vk.com/method/groups.get?access_token=" + NetworkService.token + "&extended=1&fields=description&v=5.199") else {
             return
@@ -70,7 +70,7 @@ final class NetworkService {
     }
     
     // Запрашиваем фото.
-    static func getPhotos(completion: @escaping ([Photo]) -> Void) {
+    func getPhotos(completion: @escaping ([Photo]) -> Void) {
         
         guard let url = URL(string: "https://api.vk.com/method/photos.get?access_token=" + NetworkService.token + "&album_id=wall&v=5.199") else {
             return

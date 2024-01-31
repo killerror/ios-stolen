@@ -60,7 +60,7 @@ class ViewController: UIViewController {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 28)
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
-        //button.addTarget(self, action: #selector(tap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(tap), for: .touchUpInside)
         return button
     }()
     
@@ -141,7 +141,50 @@ class ViewController: UIViewController {
     }
 }
 
-// Чтобы сбоку интерактивно отображалась визуализация данного представления
-#Preview {
-    ViewController()
+// MARK: objc methods
+
+// Создаём расширение для выноса всех objc-методов, чтобы лучше ориентироваться по коду
+private extension ViewController {
+    
+    // Тап на кнопке - переход к трём контроллерам с навигацией между собой через UITabBarController.
+    @objc func tap() {
+        
+        // UITableViewController
+        let tabl = UINavigationController(rootViewController: FriendsViewController())
+        // Оборачиваем в UINavigationController, чтобы у каждого контроллера отображался свой собственный заголовок
+        // UITableViewController
+        let tab2 = UINavigationController(rootViewController: GroupsViewController())
+        // UICollectionViewController
+        let tab3 = UINavigationController(rootViewController: PhotosViewController(collectionViewLayout: UICollectionViewFlowLayout()))
+        
+        tabl.tabBarItem.title = "Friends"
+        tab2.tabBarItem.title = "Groups"
+        tab3.tabBarItem.title = "Photos"
+        
+        let controllers = [tabl, tab2, tab3]
+        
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = controllers
+        
+        // Вариант 1
+        // Переход на другой контроллер через push.
+        //navigationController?.pushViewController(tabBarController, animated: true)
+        // Но при таком переходе наверху появляется ссылка на предыдущий контроллер.
+        // Чтобы скрыть ссылку на возврат, указываем:
+        //navigationController?.navigationBar.isHidden = true
+        
+        // Вариант 2
+        // Получаем первую сцену, из неё - первое окно.
+        guard let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let firstWindow = firstScene.windows.first else {
+            return
+        }
+        // Говорим окну, что у него корневой контроллер не тот, который мы задали в SceneDelegate, а наш tabBarController.
+        firstWindow.rootViewController = tabBarController
+    }
 }
+
+// Чтобы сбоку интерактивно отображалась визуализация данного представления
+//#Preview {
+//    ViewController()
+//}

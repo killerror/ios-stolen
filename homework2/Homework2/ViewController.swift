@@ -50,7 +50,6 @@ class ViewController: UIViewController {
     }()
     
     // Добавляем кнопку
-    
     lazy var loginButton: UIButton = {
         let button = UIButton()
         button.setTitle("Войти", for: .normal)
@@ -161,10 +160,10 @@ private extension ViewController {
         tab2.tabBarItem.title = "Groups"
         tab3.tabBarItem.title = "Photos"
         
-        let controllers = [tabl, tab2, tab3]
+        let tabs = [tabl, tab2, tab3]
         
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = controllers
+        tabBarController.viewControllers = tabs
         
         // Вариант 1
         // Переход на другой контроллер через push.

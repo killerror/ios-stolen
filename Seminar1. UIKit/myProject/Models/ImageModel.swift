@@ -5,4 +5,6 @@
 //  Created by Максим Бобков on 15.01.2024.
 //
 
-import Foundation
+struct ImageModel: Decodable {
+    let url: String
+}

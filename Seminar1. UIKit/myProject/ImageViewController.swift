@@ -7,6 +7,8 @@
 
 import UIKit
 
+// Контроллер для отображения картинки по центру экрана
+
 final class ImageViewController: UIViewController {
     
     private var myImage = UIImageView()
@@ -15,10 +17,24 @@ final class ImageViewController: UIViewController {
         
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = Theme.currentTheme.backgroundColor
         
         setupUI()
         addConstraints()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        UIView.animate(withDuration: 1, delay: 0, options: [.repeat, .autoreverse], animations: {
+            // В кложурах мы обращаемся к объектам только через self
+            self.myImage.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            self.myImage.transform = CGAffineTransform(rotationAngle: 45)
+        })
+        
+        UIView.animate(withDuration: 3, delay: 1, options: [.repeat, .autoreverse], animations: {
+            self.myImage.layer.opacity = 0
+        })
     }
     
     init(image: UIImage) {

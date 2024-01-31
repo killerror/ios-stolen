@@ -17,6 +17,7 @@ final class CustomButton: UIButton {
         backgroundColor = .blue
     }
     
+    // Обязательный инициализатор
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

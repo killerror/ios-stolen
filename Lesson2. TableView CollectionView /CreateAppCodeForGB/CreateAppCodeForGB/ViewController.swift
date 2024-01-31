@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    // Зелёный квадрат с текстом Hello
     private var label: UILabel = {
         let label = UILabel()
         label.text = "Hello"
@@ -17,12 +18,14 @@ class ViewController: UIViewController {
         return label
     }()
     
+    // Иконка юзера
     private var imageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "person"))
         imageView.backgroundColor = .yellow
         return imageView
     }()
     
+    // Красная кнопка с текстом "Tap"
     private var button: UIButton = {
         let button = UIButton()
         button.backgroundColor = .red
@@ -30,6 +33,8 @@ class ViewController: UIViewController {
         return button
     }()
     
+    // Создадим переменную scrollView.
+    // lazy, поскольку мы пока не знаем габариты этой переменной.
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.frame = view.bounds
@@ -37,23 +42,33 @@ class ViewController: UIViewController {
         return scrollView
     }()
     
-    private lazy var contentView: UIView = {
-        let contentView = UIView()
-        contentView.frame.size = contentSize
-        return contentView
-    }()
-    
+    // Создадим вычисляемое свойство для contentSize в scrollView.
+    // Для этого создадим свойство contentSize с типом CGSize, в котором будет возвращаться CGSize, у которого ширина соответствует ширине основного вью, а высота соответствует двойной высоте основного вью.
+    // Таким образом, фрейм scrollView у нас соответствует границам основного вью, а размер контента внутри scrollView больше в два раза по высоте.
     private var contentSize: CGSize {
         CGSize(width: view.frame.width, height: view.frame.height * 2)
     }
+    
+    // Создадим contentView, которое расположим внутри scrollView в ф-и viewDidLoad.
+    private lazy var contentView: UIView = {
+        let contentView = UIView()
+        // Размер contentView будет соответствовать contentSize.
+        contentView.frame.size = contentSize
+        return contentView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
         
+        // Добавляем scrollView на основное вью.
         view.addSubview(scrollView)
+        
+        // contentView добавляем на scrollView
         scrollView.addSubview(contentView)
+        
+        // А остальные элементы, такие, как лейблы, кнопки, картинки и т.д. добавляем на contentView.
         contentView.addSubview(imageView)
         contentView.addSubview(label)
         contentView.addSubview(button)

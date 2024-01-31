@@ -59,12 +59,13 @@ class ViewController: UIViewController {
     }()
     
     // Добавим кнопки.
+    
     // Для одной кнопки характеристики устанавим в ф-и addButton(), её вызов поставим в ф-ю setupUI().
     // Для другой - при помощи кложуры сразу при создании переменной. Это более популярный метод.
     
     private var myButton = UIButton()
     
-    // Используем "ленивое" свойство lazy - свойство, начальное значение которого не вычисляется до первого использования.
+    // Используем "ленивое" свойство lazy - свойство, начальное значение которого не вычисляется до первого использования. В данном случае это нужно для ссылки на self в строке button.addTarget(self...)
     // Иначе в строке button.addTarget слово self будет ссылаться на тип ViewController, а не на экземпляр ViewController.
     // Когда мы выносим указание характеристик кнопки в отдельный метод addButton(), то там можно указать свойство метода private.
     private lazy var myButton2: UIButton = {
@@ -75,14 +76,15 @@ class ViewController: UIViewController {
         button.backgroundColor = .blue
         button.addTarget(self, action: #selector(tap2), for: .touchUpInside) // .touchUpInside - когда нажали на кнопку и отпустили на ней же; .touchDown - когда нажали на кнопку
         return button
-    }()    
+    }()
     
     // Указатель, произошло ли нажатие на кнопку
     private var isMyButton2Taped = false
-
+    
+    // Создаём кастомные кнопки, использующие один и тот же класс (CustomButton в отдельном файле), меняется только текст кнопки
     private var customButton1 = CustomButton(text: "Перейти на TableViewController")
     private var customButton2 = CustomButton(text: "Перейти на CollectionViewController")
-    
+    private var customButton3 = CustomButton(text: "Выбрать тему")
     
     // MARK: viewDidLoad()
     
@@ -92,7 +94,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // У UIViewController есть свойство view - это представление, которым управляет контроллер, по умолчанию оно расположено на весь экран. Цвет экрана по умолчанию чёрный.
-        view.backgroundColor = .white
+        //view.backgroundColor = Theme.currentTheme.backgroundColor
     
         // Заголовок для экрана
         title = "ViewController"
@@ -105,6 +107,12 @@ class ViewController: UIViewController {
         
         customButton1.addTarget(self, action: #selector(customTap1), for: .touchUpInside)
         customButton2.addTarget(self, action: #selector(customTap2), for: .touchUpInside)
+        customButton3.addTarget(self, action: #selector(customTap3), for: .touchUpInside)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.backgroundColor = Theme.currentTheme.backgroundColor
     }
     
     private func setupUI() {
@@ -120,6 +128,7 @@ class ViewController: UIViewController {
         
         view.addSubview(customButton1)
         view.addSubview(customButton2)
+        view.addSubview(customButton3)
         
         addConstraints()
     }
@@ -142,6 +151,7 @@ class ViewController: UIViewController {
         myButton2.translatesAutoresizingMaskIntoConstraints = false
         customButton1.translatesAutoresizingMaskIntoConstraints = false
         customButton2.translatesAutoresizingMaskIntoConstraints = false
+        customButton3.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             
@@ -181,6 +191,13 @@ class ViewController: UIViewController {
             customButton2.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             customButton2.leftAnchor.constraint(equalTo: view.leftAnchor),
             customButton2.rightAnchor.constraint(equalTo: view.rightAnchor),
+            
+            // customButton3
+            
+            customButton3.topAnchor.constraint(equalTo: customButton2.bottomAnchor, constant: 20),
+            customButton3.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            customButton3.leftAnchor.constraint(equalTo: view.leftAnchor),
+            customButton3.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
     }
 }
@@ -203,7 +220,7 @@ private extension ViewController {
         if isMyButton2Taped {
             view.backgroundColor = .yellow
         } else {
-            view.backgroundColor = .white
+            view.backgroundColor = Theme.currentTheme.backgroundColor
         }
     }
     
@@ -215,6 +232,11 @@ private extension ViewController {
     // Поведение второй кастомной кнопки
     @objc func customTap2() {
         navigationController?.pushViewController(CollectionViewController(collectionViewLayout: UICollectionViewFlowLayout()), animated: true)
+    }
+    
+    // Поведение третьей кастомной кнопки
+    @objc func customTap3() {
+        navigationController?.pushViewController(ThemeViewController(), animated: true)
     }
 }
 
